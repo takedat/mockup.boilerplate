@@ -1,0 +1,10 @@
+{
+  "name": "boilerplate",
+  "version": "0.0.1",
+  "devDependencies": {
+    "grunt-regarde": "latest",
+    "grunt-contrib-connect": "latest",
+    "grunt": "latest",
+    "grunt-contrib-livereload": "latest"
+  }
+}
