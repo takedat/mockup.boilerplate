@@ -7,31 +7,92 @@ var folderMount = function folderMount(connect, point) {
 };
 
 module.exports = function(grunt) {
-	// Project configuration.
+
 	grunt.initConfig({
-		connect: {
-			livereload: {
+		watch: {
+			options: {
+
+			},
+			html: {
+				files: '**/*.html',
+				tasks: {},
 				options: {
-					port: 9001,
-					middleware: function(connect, options) {
-						return [lrSnippet, folderMount(connect, '.')]
-					}
+					livereload: true,
+					nospawn: true
+				}
+			},
+			coffee: {
+				files: 'assets/coffee/**/*.coffee',
+				tasks: 'coffee',
+				options: {
+					livereload: true,
+					nospawn: true
+				}
+			},
+			sass: {
+				files: 'assets/scss/**/*.scss',
+				tasks: 'compass',
+				options: {
+					livereload: true,
+					nospawn: true
+				}
+			},
+			all: {
+				files: [
+					'<%= watch.html.files %>',
+					'<%= watch.coffee.files %>',
+					'<%= watch.sass.files %>'
+				],
+				tasks: ['js', 'css'],
+				options: {
+					livereload: true,
+					nospawn: true
 				}
 			}
 		},
-		// Configuration to be run (and then tested)
-		regarde: {
-			fred: {
-				files: ['**/*.html','assets/css/*.css','assets/*/*.js'],
-				tasks: ['livereload']
+		coffee: {
+			compile: {
+				expand: true,
+				cwd: 'assets/coffee',
+				src: ['**/*.coffee'],
+				dest: 'assets/dist/js',
+				ext: '.js',
+				options: {
+					bare: true
+				}
+			}
+		},
+		compass: {
+			compile: {
+				linecomments: false,
+				forcecompile: true,
+				debugsass: false,
+				relativeassets: true,
+				options: {
+					config: 'config.rb'
+				}
+			}
+		},
+		connect: {
+			server: {
+				options: {
+					port: 8888,
+					middleware: function(connect, options) {
+						return [lrSnippet, folderMount(connect, '.')];
+					}
+				}
 			}
 		}
-
 	});
 
 	grunt.loadNpmTasks('grunt-regarde');
 	grunt.loadNpmTasks('grunt-contrib-connect');
 	grunt.loadNpmTasks('grunt-contrib-livereload');
+	grunt.loadNpmTasks('grunt-contrib-watch');
+	grunt.loadNpmTasks('grunt-contrib-compass');
+	grunt.loadNpmTasks('grunt-contrib-coffee');
 
-	grunt.registerTask('default', ['livereload-start', 'connect', 'regarde']);
+	grunt.registerTask('js', ['coffee']);
+	grunt.registerTask('css', ['compass']);
+	grunt.registerTask('default', ['connect','watch:all']);
 };

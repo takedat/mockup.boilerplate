@@ -1,3 +1,6 @@
 .DS_Store
+.sass-cache
+.css
+.js
 npm-debug.log
 node_modules

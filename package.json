@@ -2,9 +2,12 @@
   "name": "boilerplate",
   "version": "0.0.1",
   "devDependencies": {
-    "grunt-regarde": "latest",
-    "grunt-contrib-connect": "latest",
-    "grunt": "latest",
-    "grunt-contrib-livereload": "latest"
+	"grunt": "latest",
+	"grunt-regarde": "latest",
+	"grunt-contrib-connect": "latest",
+	"grunt-contrib-livereload": "latest",
+	"grunt-contrib-watch": "latest",
+	"grunt-contrib-compass": "latest",
+	"grunt-contrib-coffee": "latest"
   }
 }
